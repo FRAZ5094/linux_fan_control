@@ -1,0 +1,10 @@
+[Unit]
+Desciption=Fan control for Corsair Commander pro and Hydro H100i
+
+[Service]
+WorkingDirectory=/home/fraser/Documents/linux_fan_control/
+ExecStart=/usr/bin/python3 /home/fraser/Documents/linux_fan_control/fan_control.py 
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
