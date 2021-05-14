@@ -91,4 +91,4 @@ if __name__ == "__main__":
                 first = False
         except:
             pass
-        sleep(4)
+        sleep(2)
