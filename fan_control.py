@@ -1,25 +1,27 @@
 import json
-import subprocess
 import os
+import subprocess
 from time import sleep
+
 from liquidctl import find_liquidctl_devices
 
 
-def set_speed(devices,percent,first):
+def set_speed(devices, percent, first):
     for dev in devices:
         with dev.connect():
             if first:
                 init_status = dev.initialize()
             if "Corsair Commander Pro" in dev.description:
                 dev.set_fixed_speed("sync", percent)
-                #print("Commander Pro set to", percent)
+                # print("Commander Pro set to", percent)
             elif "Corsair Hydro" in dev.description:
                 if first:
-                    dev.initialize(pump_mode='balanced')
+                    dev.initialize(pump_mode="balanced")
 
                 dev.set_fixed_speed("fan1", percent)
                 dev.set_fixed_speed("fan2", percent)
-                #print("Hydro set to", percent)
+                # print("Hydro set to", percent)
+
 
 def get_profile():
     if os.path.exists("fan_profile.json"):
@@ -28,6 +30,7 @@ def get_profile():
             return profile
     else:
         print("no fan profile")
+
 
 def get_GPU_temp():
     out = subprocess.Popen(
@@ -61,9 +64,9 @@ if __name__ == "__main__":
     while True:
         try:
             CPU_temp = get_CPU_temp()
-            #print("CPU_temp: ", CPU_temp)
+            # print("CPU_temp: ", CPU_temp)
             GPU_temp = get_GPU_temp()
-            #print("GPU_temp: ", GPU_temp)
+            # print("GPU_temp: ", GPU_temp)
             profiles = get_profile()
             CPU_profile = profiles["CPU"]
             GPU_profile = profiles["GPU"]
@@ -77,7 +80,7 @@ if __name__ == "__main__":
                     GPU_duty = GPU_profile[key]
                     break
             duty = max(GPU_duty, CPU_duty)
-            #print("duty: ", duty)
+            # print("duty: ", duty)
             if CPU_temp > 75 or GPU_temp > 80:
                 set_speed(devices, 100, first)
                 first = False
@@ -87,8 +90,8 @@ if __name__ == "__main__":
                     last_duty = duty
                 else:
                     pass
-                    #print("duty doesn't need to be changed")
+                    # print("duty doesn't need to be changed")
                 first = False
         except:
             pass
-        sleep(2)
+        sleep(1)
