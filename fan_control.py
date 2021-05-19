@@ -53,6 +53,7 @@ def get_CPU_temp():
 
 
 if __name__ == "__main__":
+    subprocess.call("liquidctl initialize all",shell=True)
     first = True
     devices_gen = find_liquidctl_devices()
     devices = []
