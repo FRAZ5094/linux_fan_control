@@ -53,11 +53,11 @@ def get_CPU_temp():
 
 
 if __name__ == "__main__":
-    try:
-        subprocess.call("sudo liquidctl initialize all", shell=True, timeout=5)
-    except Exception as e:
-        print("failed to initialize")
-        print("e")
+    # try:
+        # subprocess.call("sudo liquidctl initialize all", shell=True, timeout=5)
+    # except Exception as e:
+        # print("failed to initialize")
+        # print(e)
     first = True
     devices_gen = find_liquidctl_devices()
     devices = []
